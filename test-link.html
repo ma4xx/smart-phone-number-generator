@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Link Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-link { color: blue; text-decoration: underline; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Link Test Page</h1>
+    <p>Testing different link formats:</p>
+    
+    <p><a href="privacy.html" class="test-link">Link to privacy.html (relative)</a></p>
+    <p><a href="./privacy.html" class="test-link">Link to ./privacy.html (explicit relative)</a></p>
+    <p><a href="/privacy.html" class="test-link">Link to /privacy.html (absolute)</a></p>
+    
+    <p><a href="index.html" class="test-link">Back to index.html</a></p>
+    
+    <script>
+        // Add click event listeners to debug
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                console.log('Link clicked:', this.href);
+                console.log('Target:', this.getAttribute('href'));
+            });
+        });
+    </script>
+</body>
+</html>

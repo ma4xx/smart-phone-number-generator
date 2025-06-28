@@ -1,0 +1,52 @@
+{
+  "name": "smart-phone-number-generator",
+  "version": "1.0.0",
+  "description": "AI-powered smart random phone number generator with support for multiple countries and formats",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'Building static site...'",
+    "start": "vercel dev",
+    "deploy": "vercel --prod",
+    "test": "echo 'No tests specified yet'",
+    "lint": "echo 'No linting configured yet'"
+  },
+  "keywords": [
+    "phone-number",
+    "generator",
+    "random",
+    "ai",
+    "mobile",
+    "telephone",
+    "validation",
+    "international",
+    "libphonenumber"
+  ],
+  "author": "Phone Number Generator Team",
+  "license": "MIT",
+  "dependencies": {
+    "@vercel/analytics": "^1.5.0",
+    "libphonenumber-js": "^1.10.51"
+  },
+  "devDependencies": {
+    "@vercel/node": "^3.0.12"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/smart-phone-generator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/smart-phone-generator/issues"
+  },
+  "homepage": "https://phonegenerator.vercel.app",
+  "vercel": {
+    "functions": {
+      "api/openrouter.js": {
+        "maxDuration": 30
+      }
+    }
+  }
+}

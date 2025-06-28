@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Random Phone Number Generator - Generate Valid Phone Numbers Instantly</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Generate valid random phone numbers instantly with our AI-powered tool. Support for multiple countries, formats, and intelligent generation based on your requirements.">
+    <meta name="keywords" content="phone number generator, random phone numbers, valid phone numbers, mobile number generator, telephone generator">
+    <meta name="author" content="Phone Number Generator">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Smart Random Phone Number Generator">
+    <meta property="og:description" content="Generate valid random phone numbers instantly with AI-powered technology">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://phonegenerator.vercel.app">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Smart Random Phone Number Generator">
+    <meta name="twitter:description" content="Generate valid random phone numbers instantly">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="navbar bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- 左侧：Logo 和网站名称 -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <img src="favicon.svg" alt="Logo" class="h-8 w-8 mr-3">
+                        <h1 class="text-xl font-bold text-gray-900">Phone Number Generator</h1>
+                    </div>
+                </div>
+                
+                <!-- 居中：导航链接 -->
+                <div class="hidden md:flex items-center justify-center flex-1">
+                    <div class="flex items-center space-x-8">
+                        <a href="index.html" class="text-gray-900 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                            </svg>
+                            Home
+                        </a>
+                        <!-- Blog 链接暂时注释 -->
+                        <!-- <a href="#blog" class="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
+                            </svg>
+                            Blog
+                        </a> -->
+                    </div>
+                </div>
+                
+                <!-- 右侧：打赏按钮和多语言选择 -->
+                <div class="flex items-center space-x-4">
+                    <!-- Ko-fi 打赏按钮 -->
+                    <a href="https://ko-fi.com/phonenumbergenerator" target="_blank" rel="noopener noreferrer" 
+                       class="inline-flex items-center bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:from-blue-600 hover:to-purple-700 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734 4.352.24 7.422-2.831 6.649-6.916zm-11.062 3.511c-1.246 1.453-4.011 3.976-4.011 3.976s-.121.119-.31.023c-.076-.057-.108-.09-.108-.09-.443-.441-3.368-3.049-4.034-3.954-.709-.965-1.041-2.7-.091-3.71.951-1.01 3.005-1.086 4.363.407 0 0 1.565-1.782 3.468-.963 1.904.82 1.832 3.011.723 4.311zm6.173.478c-.928.116-1.682.028-1.682.028V7.284h1.77s1.971.551 1.971 2.638c0 1.913-.985 2.667-2.059 3.015z"/>
+                        </svg>
+                        Buy me a coffee
+                    </a>
+                    
+                    <!-- 多语言选择 - 暂时注释 -->
+                    <!-- <div class="relative">
+                        <select id="language-selector" class="appearance-none bg-gray-50 border border-gray-300 rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200">
+                            <option value="zh-CN">🇨🇳 中文</option>
+                            <option value="en-US">🇺🇸 English</option>
+                            <option value="ja-JP">🇯🇵 日本語</option>
+                            <option value="ko-KR">🇰🇷 한국어</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                            </svg>
+                        </div>
+                    </div> -->
+                    
+                    <!-- 移动端菜单按钮 -->
+                    <div class="md:hidden">
+                        <button id="mobile-menu-button" type="button" class="bg-gray-50 rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500" aria-expanded="false">
+                            <span class="sr-only">Open main menu</span>
+                            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 移动端菜单 -->
+            <div id="mobile-menu" class="hidden md:hidden">
+                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-gray-200">
+                    <a href="index.html" class="text-gray-900 hover:text-primary-600 block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                    <!-- Blog 链接暂时注释 -->
+                    <!-- <a href="#blog" class="text-gray-500 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium">Blog</a> -->
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <!-- Hero Section -->
+        <div class="px-4 py-6 sm:px-0">
+            <div class="text-center">
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                    Generate Valid Phone Numbers Instantly
+                </h2>
+                <p class="mt-4 text-xl text-gray-600">
+                    AI-powered phone number generator with support for multiple countries and formats
+                </p>
+            </div>
+        </div>
+
+        <!-- Generator Section -->
+        <section id="generator" class="mt-8">
+            <div class="bg-white overflow-hidden shadow rounded-lg">
+                <div class="px-4 py-5 sm:p-6">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">
+                        Phone Number Generator
+                    </h3>
+                    
+                    <!-- Generator Form -->
+                    <div class="space-y-6">
+                        <!-- AI Input -->
+                        <div>
+                            <label for="ai-input" class="block text-sm font-medium text-gray-700">
+                                Describe what you need (AI-powered)
+                            </label>
+                            <div class="mt-1">
+                                <textarea id="ai-input" name="ai-input" rows="3" 
+                                    class="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                    placeholder="e.g., Generate 5 US mobile numbers, or Create random phone numbers for testing"></textarea>
+                            </div>
+                        </div>
+                        
+                        <!-- Manual Options -->
+                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                            <div>
+                                <label for="country" class="block text-sm font-medium text-gray-700">
+                                    Country
+                                </label>
+                                <select id="country" name="country" 
+                                    class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md">
+                                    <option value="US">United States +1</option>
+                                    <option value="IN">India +91</option>
+                                    <option value="NL">Netherlands +31</option>
+                                    <option value="AU">Australia +61</option>
+                                    <option value="UZ">Uzbekistan +998</option>
+                                    <option value="CN">China +86</option>
+                                    <option value="GB">United Kingdom +44</option>
+                                    <option value="DE">Germany +49</option>
+                                    <option value="FR">France +33</option>
+                                    <option value="JP">Japan +81</option>
+                                    <option value="KR">South Korea +82</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label for="count" class="block text-sm font-medium text-gray-700">
+                                    Number of phones
+                                </label>
+                                <input type="number" id="count" name="count" min="1" value="5"
+                                    class="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <p class="mt-1 text-xs text-gray-500">Maximum 50 numbers per generation</p>
+                                <p id="count-warning" class="mt-1 text-xs text-red-600 hidden">Maximum limit is 50 numbers per generation</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Format Options -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">
+                                Format
+                            </label>
+                            <div class="mt-2 space-y-2">
+                                <div class="flex items-center">
+                                    <input id="format-international" name="format" type="radio" value="international" checked
+                                        class="focus:ring-primary-500 h-4 w-4 text-primary-600 border-gray-300">
+                                    <label for="format-international" class="ml-3 block text-sm font-medium text-gray-700">
+                                        International (+1 234 567 8900)
+                                    </label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input id="format-national" name="format" type="radio" value="national"
+                                        class="focus:ring-primary-500 h-4 w-4 text-primary-600 border-gray-300">
+                                    <label for="format-national" class="ml-3 block text-sm font-medium text-gray-700">
+                                        National (234) 567-8900
+                                    </label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input id="format-e164" name="format" type="radio" value="e164"
+                                        class="focus:ring-primary-500 h-4 w-4 text-primary-600 border-gray-300">
+                                    <label for="format-e164" class="ml-3 block text-sm font-medium text-gray-700">
+                                        E.164 (+12345678900)
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Generate Button -->
+                        <div>
+                            <button type="button" id="generate-btn" 
+                                class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                                <span id="generate-text">Generate Phone Numbers</span>
+                                <span id="loading-spinner" class="hidden ml-2">
+                                    <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section id="results" class="mt-8 hidden">
+            <div class="bg-white overflow-hidden shadow rounded-lg">
+                <div class="px-4 py-5 sm:p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900">
+                            Generated Phone Numbers
+                        </h3>
+                        <div class="flex items-center space-x-2">
+                            <button id="copy-all-btn" 
+                                class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                                Copy All
+                            </button>
+                            
+                            <!-- Export Dropdown Button -->
+                            <div class="relative inline-block text-left">
+                                <button id="export-btn" type="button" 
+                                    class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+                                    aria-expanded="false" aria-haspopup="true">
+                                    Export
+                                    <svg class="-mr-1 ml-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+                                
+                                <div id="export-dropdown" class="hidden origin-top-right absolute right-0 mt-2 w-32 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
+                                    <div class="py-1" role="menu" aria-orientation="vertical">
+                                        <button id="export-csv" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                                            Export CSV
+                                        </button>
+                                        <button id="export-txt" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                                            Export TXT
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button id="clear-btn" 
+                                class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-red-700 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                                Clear
+                            </button>
+                        </div>
+                    </div>
+                    <div id="results-container" class="space-y-2">
+                        <!-- Results will be inserted here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEO Optimized Content Section -->
+        <section class="mt-16 space-y-16">
+            <!-- Our Advantages / Why Choose Us -->
+            <div class="bg-white rounded-lg shadow-sm p-8">
+                <h2 class="text-3xl font-bold text-gray-900 text-center mb-8">Why Choose Our Phone Number Generator?</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Lightning Fast</h3>
+                        <p class="text-gray-600">Looking for a reliable phone number generator? Our smart tool offers instant generation with AI-powered intelligence that understands your requirements in natural language.</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">100% Valid Formats</h3>
+                        <p class="text-gray-600">Our phone number generator ensures all generated numbers follow proper international formatting standards and country-specific rules for maximum compatibility.</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Privacy Protected</h3>
+                        <p class="text-gray-600">All processing happens locally in your browser. This phone number generator never sends your data to external servers, ensuring complete privacy protection.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Use Cases / Who Needs It -->
+            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-8">
+                <h2 class="text-3xl font-bold text-gray-900 text-center mb-8">Who Needs Our Phone Number Generator?</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-white rounded-lg p-6 shadow-sm">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-3">Software Developers</h3>
+                        <p class="text-gray-600 text-sm">Our phone number generator is an indispensable tool for testing applications, creating mock data, and validating phone number input fields during development.</p>
+                    </div>
+                    <div class="bg-white rounded-lg p-6 shadow-sm">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-3">QA Engineers</h3>
+                        <p class="text-gray-600 text-sm">Perfect for testing registration forms, SMS verification systems, and ensuring your applications handle various phone number formats correctly.</p>
+                    </div>
+                    <div class="bg-white rounded-lg p-6 shadow-sm">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-3">Data Scientists</h3>
+                        <p class="text-gray-600 text-sm">Generate realistic phone number datasets for analysis, machine learning training, and statistical modeling without using real personal information.</p>
+                    </div>
+                    <div class="bg-white rounded-lg p-6 shadow-sm">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-3">Educators</h3>
+                        <p class="text-gray-600 text-sm">Create sample data for teaching database design, programming courses, and demonstrating data validation concepts in educational settings.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Understanding Phone Number Generators -->
+            <div class="bg-white rounded-lg shadow-sm p-8">
+                <h2 class="text-3xl font-bold text-gray-900 mb-8">Understanding Phone Number Generators</h2>
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-3">What is a phone number generator and why do you need one?</h3>
+                        <p class="text-gray-600 leading-relaxed">A phone number generator is a specialized tool that creates valid, randomly generated phone numbers following specific country formats and international standards. Unlike real phone numbers, these generated numbers are designed for testing, development, and educational purposes. Our AI-powered phone number generator understands natural language requests, making it easier than ever to generate exactly what you need for your projects.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-3">The importance of valid formats from a phone number generator for testing</h3>
+                        <p class="text-gray-600 leading-relaxed">When developing applications that handle phone numbers, using properly formatted test data is crucial. A reliable phone number generator ensures that your test data matches real-world patterns, helping you catch formatting issues, validation bugs, and edge cases before your application goes live. This saves development time and improves the overall quality of your software.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-3">How our AI-powered phone number generator works</h3>
+                        <p class="text-gray-600 leading-relaxed">Our advanced phone number generator combines artificial intelligence with comprehensive country-specific formatting rules. Simply describe what you need in plain English, and our system will interpret your request and generate appropriate phone numbers. Whether you need "5 US mobile numbers" or "random international phone numbers for testing," our phone number generator understands and delivers exactly what you're looking for.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Benefits of Using a Smart Phone Number Generator -->
+            <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-8">
+                <h2 class="text-3xl font-bold text-gray-900 mb-8">Benefits of Using a Smart Phone Number Generator</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mt-1 mr-3">
+                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900">Time-saving with an efficient phone number generator</h3>
+                                <p class="text-gray-600">Generate hundreds of valid phone numbers instantly instead of manually creating test data or searching for sample numbers online.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mt-1 mr-3">
+                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900">Ensuring data privacy with randomly generated numbers</h3>
+                                <p class="text-gray-600">Our phone number generator creates completely fictional numbers, protecting real individuals' privacy while providing realistic test data.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mt-1 mr-3">
+                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900">Global compatibility provided by our versatile phone number generator</h3>
+                                <p class="text-gray-600">Support for multiple countries and international formats ensures your applications work correctly worldwide.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mt-1 mr-3">
+                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900">No registration or payment required</h3>
+                                <p class="text-gray-600">Start using our phone number generator immediately without creating accounts or providing payment information.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tips for Using Our Phone Number Generator Effectively -->
+            <div class="bg-white rounded-lg shadow-sm p-8">
+                <h2 class="text-3xl font-bold text-gray-900 mb-8">Tips for Using Our Phone Number Generator Effectively</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-3">How to specify countries using our phone number generator</h3>
+                        <p class="text-gray-600">Use the country dropdown to select specific regions, or describe your needs in the AI input field like "Generate German phone numbers" for automatic country detection.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-3">Leveraging the natural language input of our phone number generator</h3>
+                        <p class="text-gray-600">Take advantage of our AI capabilities by describing complex requirements: "Create 10 mobile numbers from different countries" or "Generate US landline numbers for testing."</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-3">Exporting data from our phone number generator</h3>
+                        <p class="text-gray-600">Use the export features to save generated numbers in CSV or TXT format for easy integration into your development workflow or testing frameworks.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Future Developments -->
+            <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-8">
+                <h2 class="text-3xl font-bold text-gray-900 text-center mb-6">Future Developments for Our Phone Number Generator</h2>
+                <div class="text-center space-y-4">
+                    <p class="text-gray-600 text-lg leading-relaxed">We are constantly improving our phone number generator to include more countries, advanced formatting options, and enhanced AI capabilities. Your feedback helps shape the future of our phone number generator, ensuring it meets the evolving needs of developers, testers, and data professionals worldwide.</p>
+                    <p class="text-gray-600">Stay tuned for upcoming features including bulk generation APIs, custom format templates, and integration with popular development tools.</p>
+                </div>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="bg-white rounded-lg shadow-sm p-8">
+                <h2 class="text-3xl font-bold text-gray-900 text-center mb-8">Frequently Asked Questions</h2>
+                <div class="space-y-4">
+                    <div class="border border-gray-200 rounded-lg">
+                        <button class="faq-toggle w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 focus:outline-none focus:bg-gray-50" data-target="faq-1">
+                            <span class="text-lg font-medium text-gray-900">Are these generated phone numbers real?</span>
+                            <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div id="faq-1" class="faq-content hidden px-6 pb-4">
+                            <p class="text-gray-600">No. These numbers from our phone number generator are virtual numbers randomly generated based on each country's format rules, intended solely for testing, development, learning, and entertainment. They do not correspond to any real users.</p>
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-200 rounded-lg">
+                        <button class="faq-toggle w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 focus:outline-none focus:bg-gray-50" data-target="faq-2">
+                            <span class="text-lg font-medium text-gray-900">Can I use numbers from this phone number generator for registration or verification?</span>
+                            <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div id="faq-2" class="faq-content hidden px-6 pb-4">
+                            <p class="text-gray-600">Strongly not recommended. As these numbers are randomly generated, they cannot be verified via SMS codes or similar methods, and might rarely and coincidentally overlap with actual numbers (though highly unlikely). Please do not use them for any services requiring real identity verification.</p>
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-200 rounded-lg">
+                        <button class="faq-toggle w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 focus:outline-none focus:bg-gray-50" data-target="faq-3">
+                            <span class="text-lg font-medium text-gray-900">Which countries' phone numbers do you support generation for?</span>
+                            <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div id="faq-3" class="faq-content hidden px-6 pb-4">
+                            <p class="text-gray-600">Our phone number generator currently supports United States, India, Netherlands, Australia, Uzbekistan, China, United Kingdom, Germany, France, Japan, and South Korea, and we will continue to add more countries and regions in the future.</p>
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-200 rounded-lg">
+                        <button class="faq-toggle w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 focus:outline-none focus:bg-gray-50" data-target="faq-4">
+                            <span class="text-lg font-medium text-gray-900">Is there a limit to the number of generated numbers?</span>
+                            <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div id="faq-4" class="faq-content hidden px-6 pb-4">
+                            <p class="text-gray-600">Yes, there is a limit to the number of numbers that can be generated in a single batch by our phone number generator, please refer to the quantity input box above for specifics. This is to ensure service quality and system stability.</p>
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-200 rounded-lg">
+                        <button class="faq-toggle w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 focus:outline-none focus:bg-gray-50" data-target="faq-5">
+                            <span class="text-lg font-medium text-gray-900">The website runs purely on the front-end, is my privacy safe?</span>
+                            <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div id="faq-5" class="faq-content hidden px-6 pb-4">
+                            <p class="text-gray-600">Yes, all your number generation requests and results are processed entirely locally in your browser. This means that unless you explicitly click to export, none of your data leaves your device, thereby maximizing your privacy protection.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white mt-16">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Left Side - Main Information -->
+                <div class="space-y-6">
+                    <!-- Website Name/Slogan -->
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-2">Phone Number Generator</h3>
+                        <p class="text-primary-400 font-medium text-lg">Free, No Signup</p>
+                        <p class="text-gray-300 text-sm mt-1">Generate valid phone numbers instantly with AI-powered technology</p>
+                    </div>
+                    
+                    <!-- Copyright -->
+                    <div>
+                        <p class="text-gray-400 text-sm">
+                            © 2024 Phone Number Generator. All rights reserved.
+                        </p>
+                    </div>
+                    
+                    <!-- Disclaimer -->
+                    <div class="bg-gray-800 p-4 rounded-lg">
+                        <h4 class="text-sm font-semibold text-gray-200 mb-2">Disclaimer:</h4>
+                        <p class="text-gray-400 text-xs leading-relaxed">
+                            All phone numbers generated are virtual numbers for testing and educational purposes only. 
+                            They are not real and should not be used for illegal activities, harassment, or real account registrations. 
+                            We are not responsible for misuse.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Right Side - Links & Contact -->
+                <div class="space-y-6">
+                    <!-- Legal Links -->
+                    <div>
+                        <h4 class="text-lg font-semibold text-white mb-4">Legal</h4>
+                        <div class="space-y-2">
+                            <a href="privacy.html" class="block text-gray-300 hover:text-white text-sm transition-colors duration-200">
+                                Privacy Policy
+                            </a>
+                            <a href="terms.html" class="block text-gray-300 hover:text-white text-sm transition-colors duration-200">
+                                Terms & Conditions
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Contact Information -->
+                    <div>
+                        <h4 class="text-lg font-semibold text-white mb-4">Contact</h4>
+                        <div class="space-y-2">
+                            <a href="mailto:support@phonenumbergenerator.my" 
+                               class="flex items-center text-gray-300 hover:text-white text-sm transition-colors duration-200">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                          d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                </svg>
+                                support@phonenumbergenerator.my
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Support Project -->
+                    <div>
+                        <h4 class="text-lg font-semibold text-white mb-4">Support</h4>
+                        <a href="https://ko-fi.com/phonenumbergenerator" target="_blank" rel="noopener noreferrer" 
+                           class="inline-flex items-center bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:from-blue-600 hover:to-purple-700 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734 4.352.24 7.422-2.831 6.649-6.916zm-11.062 3.511c-1.246 1.453-4.011 3.976-4.011 3.976s-.121.119-.31.023c-.076-.057-.108-.09-.108-.09-.443-.441-3.368-3.049-4.034-3.954-.709-.965-1.041-2.7-.091-3.71.951-1.01 3.005-1.086 4.363.407 0 0 1.565-1.782 3.468-.963 1.904.82 1.832 3.011.723 4.311zm6.173.478c-.928.116-1.682.028-1.682.028V7.284h1.77s1.971.551 1.971 2.638c0 1.913-.985 2.667-2.059 3.015z"/>
+                            </svg>
+                            Buy me a coffee
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bottom Border -->
+            <div class="border-t border-gray-700 mt-8 pt-6">
+                <div class="flex flex-col sm:flex-row justify-between items-center">
+                    <div class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
+                        <p class="text-gray-400 text-xs">
+                            Made with ❤️ for developers and testers worldwide
+                        </p>
+                    </div>
+                    <div class="flex items-center space-x-4 mt-4 sm:mt-0">
+                        <span class="text-gray-400 text-xs">Powered by AI</span>
+                        <div class="flex items-center">
+                            <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                            <span class="text-gray-400 text-xs ml-2">Service Online</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Vercel Analytics -->
+    <script type="module">
+        import { inject } from 'https://cdn.skypack.dev/@vercel/analytics';
+        inject();
+    </script>
+
+    <!-- Scripts -->
+    <!-- 核心架构组件 -->
+    <script src="js/config/country-patterns.js"></script>
+    <script src="js/core/cache-manager.js"></script>
+    <script src="js/core/performance-monitor.js"></script>
+    <script src="js/core/library-loader.js"></script>
+    
+    <!-- 本地开发AI模拟服务 -->
+    <script src="api-mock.js"></script>
+    
+    <!-- 主要功能模块 -->
+    <script src="js/phone-validator.js"></script>
+    <script src="js/app.js"></script>
+    
+    <!-- Privacy Link Debug Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const privacyLink = document.getElementById('privacy-policy-link');
+            if (privacyLink) {
+                console.log('Privacy Policy link found:', privacyLink);
+                
+                // 添加点击事件监听器
+                privacyLink.addEventListener('click', function(e) {
+                    console.log('Privacy Policy link clicked!');
+                    console.log('Event:', e);
+                    console.log('Target:', e.target);
+                    console.log('Current target:', e.currentTarget);
+                    console.log('Default prevented:', e.defaultPrevented);
+                    
+                    // 检查是否有其他事件监听器阻止了默认行为
+                    if (e.defaultPrevented) {
+                        console.warn('Default action was prevented by another event listener!');
+                    }
+                }, true); // 使用捕获阶段
+                
+                // 检查元素的计算样式
+                const computedStyle = window.getComputedStyle(privacyLink);
+                console.log('Privacy link computed style:');
+                console.log('- pointer-events:', computedStyle.pointerEvents);
+                console.log('- z-index:', computedStyle.zIndex);
+                console.log('- position:', computedStyle.position);
+                console.log('- display:', computedStyle.display);
+                console.log('- visibility:', computedStyle.visibility);
+                
+                // 检查元素位置
+                const rect = privacyLink.getBoundingClientRect();
+                console.log('Privacy link position:');
+                console.log('- x:', rect.x, 'y:', rect.y);
+                console.log('- width:', rect.width, 'height:', rect.height);
+                console.log('- visible:', rect.width > 0 && rect.height > 0);
+            } else {
+                console.error('Privacy Policy link not found!');
+            }
+        });
+    </script>
+</body>
+</html>
