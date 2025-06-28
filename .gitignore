@@ -13,6 +13,17 @@ yarn.lock
 .env.test.local
 .env.production.local
 
+# 内部开发文档（包含敏感信息）
+docs/AI集成使用说明.md
+docs/Trae-AI-2天开发计划.md
+docs/开发文档.md
+docs/开发进度跟踪.md
+.trae/
+
+# 调试和测试文件
+debug-*.html
+test-*.html
+
 # Vercel
 .vercel
 .vercel.json.backup
