@@ -14,7 +14,8 @@ yarn.lock
 .env.production.local
 
 # 内部开发文档（包含敏感信息）
-docs/
+docs/*
+!docs/.gitkeep
 .trae/
 
 # 调试和测试文件
