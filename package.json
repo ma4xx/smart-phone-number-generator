@@ -1,6 +1,6 @@
 {
   "name": "smart-phone-number-generator",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "AI-powered smart random phone number generator with support for multiple countries and formats",
   "main": "index.html",
   "scripts": {

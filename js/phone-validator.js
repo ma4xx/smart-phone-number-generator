@@ -166,25 +166,138 @@ class PhoneValidator {
             // 随机选择一个基础模式
             const basePattern = patterns[Math.floor(Math.random() * patterns.length)];
             
-            // 生成随机数字替换模式中的部分数字
-            let generatedNumber = basePattern;
+            // 根据国家生成随机号码
+            let generatedNumber;
             
-            // 替换后4位为随机数字
-            const randomSuffix = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
-            generatedNumber = generatedNumber.slice(0, -4) + randomSuffix;
+            if (countryCode === 'CN') {
+                // 中国号码特殊处理：保持前3位（如138），随机生成后8位
+                const prefix = basePattern.slice(0, 3);
+                const randomSuffix = Math.floor(Math.random() * 100000000).toString().padStart(8, '0');
+                generatedNumber = prefix + randomSuffix;
+            } else if (countryCode === 'US') {
+                // 美国号码：保持前3位区号，随机生成后7位
+                const areaCode = basePattern.slice(0, 3);
+                const randomSuffix = Math.floor(Math.random() * 10000000).toString().padStart(7, '0');
+                generatedNumber = areaCode + randomSuffix;
+            } else if (countryCode === 'GB') {
+                // 英国号码：保持前4位（如0770），随机生成后7位
+                const prefix = basePattern.slice(0, 4);
+                const randomSuffix = Math.floor(Math.random() * 10000000).toString().padStart(7, '0');
+                generatedNumber = prefix + randomSuffix;
+            } else if (countryCode === 'DE') {
+                // 德国号码：保持前4位（如0151），随机生成后8位
+                const prefix = basePattern.slice(0, 4);
+                const randomSuffix = Math.floor(Math.random() * 100000000).toString().padStart(8, '0');
+                generatedNumber = prefix + randomSuffix;
+            } else if (countryCode === 'FR') {
+                // 法国号码：保持前2位（如06），随机生成后8位
+                const prefix = basePattern.slice(0, 2);
+                const randomSuffix = Math.floor(Math.random() * 100000000).toString().padStart(8, '0');
+                generatedNumber = prefix + randomSuffix;
+            } else if (countryCode === 'JP') {
+                // 日本号码：保持前3位（如080），随机生成后8位
+                const prefix = basePattern.slice(0, 3);
+                const randomSuffix = Math.floor(Math.random() * 100000000).toString().padStart(8, '0');
+                generatedNumber = prefix + randomSuffix;
+            } else if (countryCode === 'KR') {
+                // 韩国号码：保持前3位（如010），随机生成后8位
+                const prefix = basePattern.slice(0, 3);
+                const randomSuffix = Math.floor(Math.random() * 100000000).toString().padStart(8, '0');
+                generatedNumber = prefix + randomSuffix;
+            } else if (countryCode === 'AU') {
+                // 澳大利亚号码：保持前2位（如04），随机生成后8位
+                const prefix = basePattern.slice(0, 2);
+                const randomSuffix = Math.floor(Math.random() * 100000000).toString().padStart(8, '0');
+                generatedNumber = prefix + randomSuffix;
+            } else if (countryCode === 'IN') {
+                // 印度号码：保持前1位（如9），随机生成后9位
+                const prefix = basePattern.slice(0, 1);
+                const randomSuffix = Math.floor(Math.random() * 1000000000).toString().padStart(9, '0');
+                generatedNumber = prefix + randomSuffix;
+            } else {
+                // 其他国家：替换后4位为随机数字
+                const randomSuffix = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+                generatedNumber = basePattern.slice(0, -4) + randomSuffix;
+            }
 
             // 使用libphonenumber-js解析和验证号码
-            const phoneNumber = this.libphonenumber.parsePhoneNumber(generatedNumber, countryCode);
+            // 对于中国号码，需要添加国际区号前缀
+            let numberToParse = generatedNumber;
+            if (countryCode === 'CN' && !generatedNumber.startsWith('+')) {
+                // 中国号码：确保是11位，然后添加+86前缀
+                if (generatedNumber.length === 11) {
+                    numberToParse = `+86${generatedNumber}`;
+                } else {
+                    // 如果不是11位，重新生成
+                    const prefix = basePattern.slice(0, 3);
+                    const randomSuffix = Math.floor(Math.random() * 100000000).toString().padStart(8, '0');
+                    const newNumber = prefix + randomSuffix;
+                    numberToParse = `+86${newNumber}`;
+                }
+            } else if (countryCode === 'US' && !generatedNumber.startsWith('+')) {
+                numberToParse = `+1${generatedNumber}`;
+            } else if (!generatedNumber.startsWith('+')) {
+                // 为其他国家添加相应的国际区号
+                const countryCallingCodes = {
+                    'GB': '+44',
+                    'DE': '+49', 
+                    'FR': '+33',
+                    'JP': '+81',
+                    'KR': '+82',
+                    'AU': '+61',
+                    'IN': '+91',
+                    'NL': '+31'
+                };
+                const callingCode = countryCallingCodes[countryCode];
+                if (callingCode) {
+                    numberToParse = `${callingCode}${generatedNumber}`;
+                }
+            }
+            
+            const phoneNumber = this.libphonenumber.parsePhoneNumber(numberToParse);
             
             if (!phoneNumber.isValid()) {
                 // 如果生成的号码无效，尝试其他模式
                 for (let i = 0; i < 5; i++) {
                     const altPattern = patterns[Math.floor(Math.random() * patterns.length)];
-                    const altSuffix = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
-                    const altNumber = altPattern.slice(0, -4) + altSuffix;
+                    let altNumber;
+                    
+                    if (countryCode === 'CN') {
+                        const altPrefix = altPattern.slice(0, 3);
+                        const altSuffix = Math.floor(Math.random() * 100000000).toString().padStart(8, '0');
+                        altNumber = altPrefix + altSuffix;
+                    } else if (countryCode === 'US') {
+                        const altAreaCode = altPattern.slice(0, 3);
+                        const altSuffix = Math.floor(Math.random() * 10000000).toString().padStart(7, '0');
+                        altNumber = altAreaCode + altSuffix;
+                    } else {
+                        const altSuffix = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+                        altNumber = altPattern.slice(0, -4) + altSuffix;
+                    }
                     
                     try {
-                        const altPhoneNumber = this.libphonenumber.parsePhoneNumber(altNumber, countryCode);
+                        let altNumberToParse = altNumber;
+                        if (countryCode === 'CN' && !altNumber.startsWith('+')) {
+                            // 确保中国号码是11位
+                            if (altNumber.length === 11) {
+                                altNumberToParse = `+86${altNumber}`;
+                            } else {
+                                continue; // 跳过无效长度的号码
+                            }
+                        } else if (countryCode === 'US' && !altNumber.startsWith('+')) {
+                            altNumberToParse = `+1${altNumber}`;
+                        } else if (!altNumber.startsWith('+')) {
+                            const countryCallingCodes = {
+                                'GB': '+44', 'DE': '+49', 'FR': '+33', 'JP': '+81',
+                                'KR': '+82', 'AU': '+61', 'IN': '+91', 'NL': '+31'
+                            };
+                            const callingCode = countryCallingCodes[countryCode];
+                            if (callingCode) {
+                                altNumberToParse = `${callingCode}${altNumber}`;
+                            }
+                        }
+                        
+                        const altPhoneNumber = this.libphonenumber.parsePhoneNumber(altNumberToParse);
                         if (altPhoneNumber.isValid()) {
                             return this.formatWithLibphonenumber(altPhoneNumber, format);
                         }
@@ -215,7 +328,9 @@ class PhoneValidator {
                 return phoneNumber.formatNational();
             case 'INTERNATIONAL':
             default:
-                return phoneNumber.formatInternational();
+                // 使用我们自定义的格式化逻辑，确保中国号码正确显示
+                const internationalFormat = phoneNumber.formatInternational();
+                return this.formatInternationalWithSpaces(internationalFormat, phoneNumber.country);
         }
     }
 
@@ -391,7 +506,8 @@ class PhoneValidator {
                     if (parsed.isValid()) {
                         switch (format) {
                             case 'INTERNATIONAL':
-                                formattedNumber = parsed.formatInternational();
+                                // 使用自定义格式化逻辑，不添加空格
+                                formattedNumber = this.formatInternationalWithSpaces(parsed.formatInternational(), parsed.country);
                                 break;
                             case 'NATIONAL':
                                 formattedNumber = parsed.formatNational();
@@ -403,7 +519,8 @@ class PhoneValidator {
                                 formattedNumber = parsed.getURI();
                                 break;
                             default:
-                                formattedNumber = parsed.formatInternational();
+                                // 使用自定义格式化逻辑，不添加空格
+                                formattedNumber = this.formatInternationalWithSpaces(parsed.formatInternational(), parsed.country);
                         }
                     } else {
                         formattedNumber = this.fallbackFormat(phoneNumber, format, countryCode);
@@ -451,7 +568,7 @@ class PhoneValidator {
                         type: parsed.getType(),
                         isPossible: parsed.isPossible(),
                         formatted: {
-                            international: parsed.formatInternational(),
+                            international: this.formatInternationalWithSpaces(parsed.formatInternational(), parsed.country),
                             national: parsed.formatNational(),
                             e164: parsed.format('E.164'),
                             uri: parsed.getURI()
@@ -1090,18 +1207,31 @@ class PhoneValidator {
             };
             const callingCode = countryCallingCodes[countryCode];
             if (callingCode) {
-                return `+${callingCode} ${cleaned}`;
+                const nationalNumber = cleaned;
+                return this.formatInternationalWithSpaces(`+${callingCode}${nationalNumber}`, countryCode);
             }
         }
         
-        // 已经是国际格式，添加空格分隔
+        // 已经是国际格式，进行正确的格式化
+        return this.formatInternationalWithSpaces(cleaned, countryCode);
+    }
+
+    /**
+     * 为国际格式号码添加适当的空格分隔
+     */
+    formatInternationalWithSpaces(phoneNumber, countryCode) {
+        const cleaned = phoneNumber.replace(/[^\d+]/g, '');
+        
+        // 解析国家代码和号码
         const match = cleaned.match(/^\+(\d{1,3})(\d+)$/);
-        if (match) {
-            const [, countryCode, number] = match;
-            return `+${countryCode} ${number}`;
+        if (!match) {
+            return cleaned;
         }
         
-        return cleaned;
+        const [, callingCode, nationalNumber] = match;
+        
+        // 直接返回国家代码+号码，不添加任何空格
+        return `+${callingCode}${nationalNumber}`;
     }
 
     /**
@@ -1206,7 +1336,7 @@ class PhoneValidator {
                         nationalNumber: parsed.nationalNumber,
                         type: parsed.getType(),
                         formatted: {
-                            international: parsed.formatInternational(),
+                            international: this.formatInternationalWithSpaces(parsed.formatInternational(), parsed.country),
                             national: parsed.formatNational(),
                             e164: parsed.format('E.164'),
                             uri: parsed.getURI()

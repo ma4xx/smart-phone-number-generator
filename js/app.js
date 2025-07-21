@@ -8,6 +8,9 @@ class PhoneNumberGenerator {
         this.apiKey = null; // 将从环境变量或配置中获取
         this.apiEndpoint = '/api/openrouter'; // Vercel Functions端点
         
+        // 从配置文件中获取国家数据
+        this.countries = CountryData.getAllCountries();
+        
         // 初始化优化后的手机号码验证器
         this.phoneValidator = new PhoneValidator({
             enableCache: true,
@@ -129,115 +132,24 @@ class PhoneNumberGenerator {
                 this.handleGenerate();
             }
         });
-        
-        // 数量输入框验证
-        const countInput = document.getElementById('count');
-        const countWarning = document.getElementById('count-warning');
-        
-        countInput.addEventListener('input', (e) => {
-            const value = parseInt(e.target.value);
-            if (value > 50) {
-                countWarning.classList.remove('hidden');
-            } else {
-                countWarning.classList.add('hidden');
-            }
-        });
-        
-        countInput.addEventListener('blur', (e) => {
-            const value = parseInt(e.target.value);
-            if (value > 50) {
-                e.target.value = 50;
-                countWarning.classList.remove('hidden');
-                setTimeout(() => {
-                    countWarning.classList.add('hidden');
-                }, 3000); // 3秒后隐藏警告
-            }
-        });
-        
-        // 键盘输入时也检查
-        countInput.addEventListener('keyup', (e) => {
-            const value = parseInt(e.target.value);
-            if (value > 50) {
-                countWarning.classList.remove('hidden');
-            } else {
-                countWarning.classList.add('hidden');
-            }
-        });
     }
 
     /**
      * 加载国家数据
      */
     loadCountryData() {
-        // 国家代码和格式映射
-        this.countryData = {
-            'US': {
-                name: 'United States',
-                code: '+1',
-                format: 'XXX-XXX-XXXX',
-                mobilePrefix: ['2', '3', '4', '5', '6', '7', '8', '9']
-            },
-            'CN': {
-                name: 'China',
-                code: '+86',
-                format: 'XXX XXXX XXXX',
-                mobilePrefix: ['13', '14', '15', '16', '17', '18', '19']
-            },
-            'GB': {
-                name: 'United Kingdom',
-                code: '+44',
-                format: 'XXXX XXX XXXX',
-                mobilePrefix: ['7']
-            },
-            'DE': {
-                name: 'Germany',
-                code: '+49',
-                format: 'XXX XXXXXXX',
-                mobilePrefix: ['15', '16', '17']
-            },
-            'FR': {
-                name: 'France',
-                code: '+33',
-                format: 'X XX XX XX XX',
-                mobilePrefix: ['6', '7']
-            },
-            'JP': {
-                name: 'Japan',
-                code: '+81',
-                format: 'XX-XXXX-XXXX',
-                mobilePrefix: ['70', '80', '90']
-            },
-            'KR': {
-                name: 'South Korea',
-                code: '+82',
-                format: 'XX-XXXX-XXXX',
-                mobilePrefix: ['10', '11']
-            },
-            'AU': {
-                name: 'Australia',
-                code: '+61',
-                format: 'XXX XXX XXX',
-                mobilePrefix: ['4']
-            },
-            'IN': {
-                name: 'India',
-                code: '+91',
-                format: 'XXXXX XXXXX',
-                mobilePrefix: ['6', '7', '8', '9']
-            },
-            'NL': {
-                name: 'Netherlands',
-                code: '+31',
-                format: 'X XXXX XXXX',
-                mobilePrefix: ['6']
-            },
-            'UZ': {
-                name: 'Uzbekistan',
-                code: '+998',
-                format: 'XX XXX XX XX',
-                mobilePrefix: ['9']
-            }
-        };
+        // 国家数据现在从 CountryData 配置文件中获取
+        // 为了向后兼容，将新格式转换为旧格式
+        this.countryData = {};
+        
+        Object.entries(this.countries).forEach(([code, data]) => {
+            this.countryData[code] = {
+                name: data.name,
+                code: data.code || this.getCountryCode(code),
+                format: data.format,
+                mobilePrefix: data.mobilePrefixes || []
+            };
+        });
     }
 
     /**
@@ -245,20 +157,11 @@ class PhoneNumberGenerator {
      */
     async handleGenerate() {
         const aiInput = document.getElementById('ai-input').value.trim();
-        const country = document.getElementById('country').value;
-        let count = parseInt(document.getElementById('count').value);
-        const format = document.querySelector('input[name="format"]:checked').value;
         
-        // 验证数量限制
-        if (count > 50) {
-            count = 50;
-            document.getElementById('count').value = 50;
-            const countWarning = document.getElementById('count-warning');
-            countWarning.classList.remove('hidden');
-            setTimeout(() => {
-                countWarning.classList.add('hidden');
-            }, 3000);
-        }
+        // 设置默认值，这些值可能会被AI解析结果覆盖
+        let country = 'US'; // 默认美国
+        let count = 5; // 默认5个
+        let format = 'international'; // 默认国际格式
 
         // 显示加载状态
         this.setLoadingState(true);
@@ -270,7 +173,7 @@ class PhoneNumberGenerator {
                 // 使用AI生成
                 phoneNumbers = await this.generateWithAI(aiInput, country, count, format);
             } else {
-                // 使用传统算法生成
+                // 如果没有AI输入，使用默认参数生成
                 phoneNumbers = await this.generateTraditional(country, count, format);
             }
 
@@ -291,21 +194,18 @@ class PhoneNumberGenerator {
             // 首先使用AI解析用户输入，提取国家和数量信息
             const aiParseResult = await this.parseUserInput(prompt);
             
-            // 如果AI成功解析了国家信息，更新选择
+            // 如果AI成功解析了国家信息，更新参数
             if (aiParseResult.success) {
                 if (aiParseResult.country !== 'unknown') {
                     const detectedCountry = this.findCountryCode(aiParseResult.country);
                     if (detectedCountry) {
                         country = detectedCountry;
-                        // 更新前端显示
-                        document.getElementById('country').value = country;
                     }
                 }
                 
                 // 如果AI解析了数量，更新数量
                 if (aiParseResult.quantity && aiParseResult.quantity !== count) {
                     count = Math.min(aiParseResult.quantity, 50); // 限制最大50个
-                    document.getElementById('count').value = count;
                 }
                 
                 // 显示AI解析结果给用户
@@ -336,19 +236,19 @@ class PhoneNumberGenerator {
             console.warn('PhoneValidator failed, using fallback:', error);
             
             // 备用生成逻辑
-            const countryInfo = this.countryData[country];
-            if (!countryInfo) {
-                throw new Error(`Unsupported country: ${country}`);
-            }
+        const countryInfo = this.countries[country] || this.countryData[country];
+        if (!countryInfo) {
+            throw new Error(`Unsupported country: ${country}`);
+        }
 
-            const phoneNumbers = [];
-            
-            for (let i = 0; i < count; i++) {
-                const phoneNumber = this.generateSingleNumber(countryInfo, format);
-                phoneNumbers.push(phoneNumber);
-            }
+        const phoneNumbers = [];
+        
+        for (let i = 0; i < count; i++) {
+            const phoneNumber = this.generateSingleNumber(countryInfo, format);
+            phoneNumbers.push(phoneNumber);
+        }
 
-            return phoneNumbers;
+        return phoneNumbers;
         }
     }
 
@@ -356,16 +256,17 @@ class PhoneNumberGenerator {
      * 生成单个手机号码
      */
     generateSingleNumber(countryInfo, format) {
-        const { code, mobilePrefix } = countryInfo;
+        const code = countryInfo.code || this.getCountryCode(countryInfo.name);
+        const mobilePrefixes = countryInfo.mobilePrefixes || countryInfo.mobilePrefix || [];
         
         // 随机选择一个移动号码前缀
-        const prefix = mobilePrefix[Math.floor(Math.random() * mobilePrefix.length)];
+        const prefix = mobilePrefixes[Math.floor(Math.random() * mobilePrefixes.length)];
         
         // 根据国家生成号码
         let number;
         switch (countryInfo.name) {
             case 'United States':
-                // 美国格式: +1 XXX XXX XXXX
+                // 美国格式: +1 XXX XXX XXXX (10位)
                 const areaCode = this.generateDigits(3, ['2', '3', '4', '5', '6', '7', '8', '9']);
                 const exchange = this.generateDigits(3, ['2', '3', '4', '5', '6', '7', '8', '9']);
                 const subscriber = this.generateDigits(4);
@@ -373,15 +274,23 @@ class PhoneNumberGenerator {
                 break;
                 
             case 'China':
-                // 中国格式: +86 1XX XXXX XXXX
-                const suffix = this.generateDigits(9);
-                number = `${prefix}${suffix}`;
+                // 中国格式: +86 1XX XXXX XXXX (11位)
+                // prefix是13、14、15等，需要在前面加1，后面加8位数字
+                const chinaSuffix = this.generateDigits(8);
+                number = `1${prefix}${chinaSuffix}`;
                 break;
                 
             case 'United Kingdom':
-                // 英国格式: +44 7XXX XXX XXX
+                // 英国格式: +44 7XXX XXX XXX (10位)
                 const ukSuffix = this.generateDigits(9);
                 number = `${prefix}${ukSuffix}`;
+                break;
+                
+            case 'India':
+                // 印度格式: +91 XXXXX XXXXX (10位)
+                // prefix是6、7、8、9，后面加9位数字
+                const indiaSuffix = this.generateDigits(9);
+                number = `${prefix}${indiaSuffix}`;
                 break;
                 
             default:
@@ -508,10 +417,13 @@ class PhoneNumberGenerator {
         const div = document.createElement('div');
         div.className = 'flex items-center justify-between p-3 bg-gray-50 rounded-md';
         
+        // 直接使用phone-validator.js返回的格式化结果，不再重复格式化
+        const formattedNumber = phoneNumber;
+        
         div.innerHTML = `
             <div class="flex items-center">
                 <span class="text-sm text-gray-500 mr-3">${index + 1}.</span>
-                <span class="font-mono text-lg text-gray-900">${phoneNumber}</span>
+                <span class="font-mono text-lg text-gray-900">${formattedNumber}</span>
             </div>
             <button class="copy-btn inline-flex items-center px-2 py-1 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500" data-phone="${phoneNumber}">
                 Copy
@@ -939,7 +851,7 @@ class PhoneNumberGenerator {
         const normalizedName = countryName.toLowerCase();
         
         // 直接匹配
-        for (const [code, data] of Object.entries(this.countryData)) {
+        for (const [code, data] of Object.entries(this.countries)) {
             if (data.name.toLowerCase() === normalizedName) {
                 return code;
             }
@@ -951,20 +863,60 @@ class PhoneNumberGenerator {
             'usa': 'US',
             'america': 'US',
             'united states': 'US',
+            '美国': 'US',
             'china': 'CN',
             'chinese': 'CN',
+            '中国': 'CN',
+            '中国大陆': 'CN',
+            '中华人民共和国': 'CN',
             'uk': 'GB',
             'britain': 'GB',
             'england': 'GB',
             'united kingdom': 'GB',
+            '英国': 'GB',
             'germany': 'DE',
             'german': 'DE',
             'deutschland': 'DE',
+            '德国': 'DE',
             'france': 'FR',
-            'french': 'FR'
+            'french': 'FR',
+            '法国': 'FR',
+            'japan': 'JP',
+            'japanese': 'JP',
+            '日本': 'JP',
+            'korea': 'KR',
+            'south korea': 'KR',
+            '韩国': 'KR',
+            '南韩': 'KR',
+            'australia': 'AU',
+            '澳大利亚': 'AU',
+            '澳洲': 'AU',
+            'india': 'IN',
+            '印度': 'IN'
         };
         
         return countryMappings[normalizedName] || null;
+    }
+    
+    /**
+     * 获取国家代码
+     */
+    getCountryCode(countryCodeOrName) {
+        const countryCodeMap = {
+            'US': '+1',
+            'CN': '+86',
+            'GB': '+44',
+            'DE': '+49',
+            'FR': '+33',
+            'JP': '+81',
+            'KR': '+82',
+            'AU': '+61',
+            'IN': '+91',
+            'NL': '+31',
+            'UZ': '+998'
+        };
+        
+        return countryCodeMap[countryCodeOrName] || '+1';
     }
 
     /**
