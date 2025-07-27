@@ -45,7 +45,7 @@ export default async function handler(req, res) {
                 'X-Title': 'Smart Phone Number Generator'
             },
             body: JSON.stringify({
-                model: model || 'anthropic/claude-3-haiku',
+                model: model || 'mistralai/mistral-small-3.2-24b-instruct',
                 messages: messages,
                 max_tokens: max_tokens || 1000,
                 temperature: temperature || 0.7,

@@ -75,7 +75,7 @@ Output: {"country": "United States", "quantity": 100}`
                 'X-Title': 'Smart Phone Number Generator'
             },
             body: JSON.stringify({
-                model: 'anthropic/claude-3-haiku', // 使用快速且经济的模型
+                model: 'mistralai/mistral-small-3.2-24b-instruct', // 使用Mistral AI模型
                 messages: messages,
                 max_tokens: 200, // 限制token数量，因为只需要简单的JSON响应
                 temperature: 0.1, // 低温度确保一致性

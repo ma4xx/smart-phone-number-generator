@@ -79,6 +79,9 @@
                             </svg>
                             Home
                         </a>
+                        <a href="us-phone-generator.html" class="text-gray-500 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 flex items-center">
+                            US
+                        </a>
                         <!-- Blog 链接暂时注释 -->
                         <!-- <a href="#blog" class="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 flex items-center">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -131,6 +134,7 @@
             <div id="mobile-menu" class="hidden md:hidden">
                 <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-gray-200">
                     <a href="index.html" class="text-gray-900 hover:text-primary-600 block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                    <a href="us-phone-generator.html" class="text-gray-500 hover:text-primary-600 block px-3 py-2 rounded-md text-base font-medium">US</a>
                     <!-- Blog 链接暂时注释 -->
                     <!-- <a href="#blog" class="text-gray-500 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium">Blog</a> -->
                     
@@ -581,8 +585,12 @@
 
     <!-- Vercel Analytics -->
     <script type="module">
-        import { inject } from 'https://cdn.skypack.dev/@vercel/analytics';
-        inject();
+        try {
+            const { inject } = await import('https://cdn.skypack.dev/@vercel/analytics');
+            inject();
+        } catch (error) {
+            console.log('Vercel Analytics not loaded (development mode)');
+        }
     </script>
 
     <!-- Scripts -->
@@ -603,56 +611,39 @@
     <!-- Privacy Link Debug Script -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const privacyLink = document.getElementById('privacy-policy-link');
+            const privacyLink = document.querySelector('a[href="privacy.html"]');
             if (privacyLink) {
                 console.log('Privacy Policy link found:', privacyLink);
-                
-                // 添加点击事件监听器
-                privacyLink.addEventListener('click', function(e) {
-                    console.log('Privacy Policy link clicked!');
-                    console.log('Event:', e);
-                    console.log('Target:', e.target);
-                    console.log('Current target:', e.currentTarget);
-                    console.log('Default prevented:', e.defaultPrevented);
-                    
-                    // 检查是否有其他事件监听器阻止了默认行为
-                    if (e.defaultPrevented) {
-                        console.warn('Default action was prevented by another event listener!');
-                    }
-                }, true); // 使用捕获阶段
-                
-                // 检查元素的计算样式
-                const computedStyle = window.getComputedStyle(privacyLink);
-                console.log('Privacy link computed style:');
-                console.log('- pointer-events:', computedStyle.pointerEvents);
-                console.log('- z-index:', computedStyle.zIndex);
-                console.log('- position:', computedStyle.position);
-                console.log('- display:', computedStyle.display);
-                console.log('- visibility:', computedStyle.visibility);
-                
-                // 检查元素位置
-                const rect = privacyLink.getBoundingClientRect();
-                console.log('Privacy link position:');
-                console.log('- x:', rect.x, 'y:', rect.y);
-                console.log('- width:', rect.width, 'height:', rect.height);
-                console.log('- visible:', rect.width > 0 && rect.height > 0);
             } else {
-                console.error('Privacy Policy link not found!');
+                console.log('Privacy Policy link not found - this is normal for development');
             }
         });
     </script>
     
     <!-- Google Analytics -->
-    <div style="display:none">
-        <!-- Google tag (gtag.js) -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-W71HNMJRHE"></script>
-        <script>
+    <script>
+        // 只在生产环境加载 Google Analytics
+        if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+            // Google tag (gtag.js)
+            const script = document.createElement('script');
+            script.async = true;
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=G-W71HNMJRHE';
+            script.onerror = function() {
+                console.log('Google Analytics script failed to load (blocked by ad blocker or network issue)');
+            };
+            document.head.appendChild(script);
+            
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            
-            gtag('config', 'G-W71HNMJRHE');
-        </script>
-    </div>
+            gtag('config', 'G-W71HNMJRHE', {
+                // 添加错误处理
+                'custom_map': {},
+                'send_page_view': true
+            });
+        } else {
+            console.log('Google Analytics disabled in development mode');
+        }
+    </script>
 </body>
 </html>

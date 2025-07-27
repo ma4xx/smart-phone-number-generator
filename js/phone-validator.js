@@ -66,9 +66,9 @@ class PhoneValidator {
             
             // 使用LibraryLoader加载（如果可用）
             if (this.libraryLoader) {
-                success = await this.libraryLoader.loadLibrary();
+                this.libphonenumber = await this.libraryLoader.load();
+                success = !!this.libphonenumber;
                 if (success) {
-                    this.libphonenumber = window.libphonenumber;
                     this.isLibraryLoaded = true;
                 }
             } else {

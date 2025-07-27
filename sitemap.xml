@@ -1,9 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
+    <!-- 主页 -->
     <url>
         <loc>https://www.phonenumbergenerator.my/</loc>
-        <lastmod>2025-07-01</lastmod>
+        <lastmod>2025-07-27</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
+    </url>
+    
+    <!-- US 手机号生成器页面 -->
+    <url>
+        <loc>https://www.phonenumbergenerator.my/us-phone-generator.html</loc>
+        <lastmod>2025-07-27</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+    <!-- 隐私政策页面 -->
+    <url>
+        <loc>https://www.phonenumbergenerator.my/privacy.html</loc>
+        <lastmod>2025-07-27</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    
+    <!-- 服务条款页面 -->
+    <url>
+        <loc>https://www.phonenumbergenerator.my/terms.html</loc>
+        <lastmod>2025-07-27</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
     </url>
 </urlset>
