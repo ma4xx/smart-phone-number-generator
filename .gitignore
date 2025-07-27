@@ -137,6 +137,8 @@ PROJECT_STATUS.md
 CHANGELOG.md
 智能随机手机号码生成器网站设计文档
 GOOGLE_ANALYTICS_FIX.md
+.env.example
+api-mock.js
 
 # 其他可能的敏感文档
 *.design.md
